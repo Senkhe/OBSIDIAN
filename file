@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opening Obsidian…</title>
+<p id="msg">Opening Obsidian…</p>
+<script>
+  const p = new URLSearchParams(location.search);
+  const vault = p.get("vault");
+  const file = p.get("file");
+  const msg = document.getElementById("msg");
+
+  if (vault && file) {
+    const url = "obsidian://open?vault=" + encodeURIComponent(vault) +
+                "&file=" + encodeURIComponent(file);
+    const a = document.createElement("a");
+    a.href = url;
+    a.textContent = "Click here if Obsidian didn't open";
+    msg.textContent = "";
+    msg.appendChild(a);
+    location.href = url;
+  } else {
+    msg.textContent = "Missing vault or file parameter.";
+  }
+</script>
