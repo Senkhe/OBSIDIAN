@@ -4,21 +4,16 @@
 <title>Opening Obsidian…</title>
 <p id="msg">Opening Obsidian…</p>
 <script>
-  const p = new URLSearchParams(location.search);
-  const vault = p.get("vault");
-  const file = p.get("file");
+  const raw = decodeURIComponent(location.search.slice(1));
   const msg = document.getElementById("msg");
-
-  if (vault && file) {
-    const url = "obsidian://open?vault=" + encodeURIComponent(vault) +
-                "&file=" + encodeURIComponent(file);
+  if (raw.startsWith("obsidian://")) {
     const a = document.createElement("a");
-    a.href = url;
+    a.href = raw;
     a.textContent = "Click here if Obsidian didn't open";
     msg.textContent = "";
     msg.appendChild(a);
-    location.href = url;
+    location.href = raw;
   } else {
-    msg.textContent = "Missing vault or file parameter.";
+    msg.textContent = "Link must start with obsidian://";
   }
 </script>
